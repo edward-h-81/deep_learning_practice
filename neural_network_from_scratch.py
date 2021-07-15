@@ -1,5 +1,7 @@
 import numpy as np
 
+# video 6 in Valerio's deep learning for audio series
+
 class MLP:
 
     def __init__(self, num_inputs=3, num_hidden=[3,5], num_outputs=2):
