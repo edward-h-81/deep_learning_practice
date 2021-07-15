@@ -35,6 +35,7 @@ spectrogram = np.abs(stft)
 log_spectrogram = librosa.amplitude_to_db(spectrogram)
 
 librosa.display.specshow(log_spectrogram, sr=sr, hop_length=hop_length)
+
 plt.xlabel("Time")
 plt.ylabel("Frequency")
 plt.colorbar()
