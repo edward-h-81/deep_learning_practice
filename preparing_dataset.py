@@ -2,6 +2,8 @@ import json
 import os
 import math
 import librosa
+from matplotlib import pyplot as plt
+import librosa, librosa.display
 
 DATASET_PATH = "marsyas_mini"
 JSON_PATH = "data_10.json"
@@ -10,7 +12,7 @@ TRACK_DURATION = 30  # measured in seconds
 SAMPLES_PER_TRACK = SAMPLE_RATE * TRACK_DURATION
 
 
-def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=5):
+def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, num_segments=10):
     """Extracts MFCCs from music dataset and saves them into a json file along witgh genre labels.
 
         :param dataset_path (str): Path to dataset
@@ -60,6 +62,14 @@ def save_mfcc(dataset_path, json_path, num_mfcc=13, n_fft=2048, hop_length=512, 
                     # extract mfcc
                     mfcc = librosa.feature.mfcc(signal[start:finish], sample_rate, n_mfcc=num_mfcc, n_fft=n_fft,
                                                 hop_length=hop_length)
+
+                    # # code I've added to check MFCCs look okay before saving to json
+                    # librosa.display.specshow(mfcc, sr=sample_rate, hop_length=hop_length)
+                    # plt.xlabel("Time")
+                    # plt.ylabel("MFCC")
+                    # plt.colorbar()
+                    # plt.show()
+
                     mfcc = mfcc.T
 
                     # store only mfcc feature with expected number of vectors
