@@ -2,6 +2,7 @@ import json
 import os
 import math
 import librosa
+import numpy as np
 from matplotlib import pyplot as plt
 import librosa, librosa.display
 
@@ -61,16 +62,19 @@ def save_log_mel_spec(dataset_path, json_path, n_fft=2048, hop_length=512, num_s
 
                     # extract log mel spec
                     # MAYBE ADD FEATURE FROM preparing_data_spectrograms.py
-                    mel_spec = librosa.feature.melspectrogram(signal[start:finish], sample_rate, n_fft=n_fft,
+                    mel_spec = librosa.feature.melspectrogram(signal[start:finish], sample_rate, n_mels=256, n_fft=2048,
                                                 hop_length=hop_length)
                     log_mel_spec = librosa.amplitude_to_db(mel_spec)
+                    # log_mel_spec = librosa.power_to_db(mel_spec)
+
+                    print(log_mel_spec.shape)
 
                     # code I've added to check log mel specs look okay before saving to json
-                    # librosa.display.specshow(log_mel_spec, sr=sample_rate, hop_length=hop_length)
-                    # plt.xlabel("Time")
-                    # plt.ylabel("Frequency")
-                    # plt.colorbar()
-                    # plt.show()
+                    librosa.display.specshow(log_mel_spec, sr=sample_rate, hop_length=hop_length)
+                    plt.xlabel("Time")
+                    plt.ylabel("Frequency")
+                    plt.colorbar()
+                    plt.show()
 
                     log_mel_spec = log_mel_spec.T
 
